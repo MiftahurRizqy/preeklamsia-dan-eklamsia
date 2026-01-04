@@ -25,7 +25,12 @@ SECRET_KEY = "django-insecure-rt-&=)jgxjw3z7@2(eoanol$ygc-hk-tu^%&uo#i*w=^8mh&g4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 
 # Application definition
@@ -53,10 +58,13 @@ INSTALLED_APPS = [
 SITE_ID = 1  # Kita akan pastikan ID ini benar di langkah berikutnya
 LOGIN_REDIRECT_URL = '/'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none" 
-
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ['email']  # Password tidak perlu ditulis di sini, akan otomatis muncul
+ACCOUNT_PASSWORD_REQUIRED = True   # Pastikan password wajib
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 # Allauth behavior: hilangkan halaman konfirmasi logout & login sosial polos
 ACCOUNT_LOGOUT_ON_GET = True              # logout langsung via GET dan redirect
 SOCIALACCOUNT_LOGIN_ON_GET = True         # klik login sosial langsung redirect ke provider tanpa konfirmasi dulu

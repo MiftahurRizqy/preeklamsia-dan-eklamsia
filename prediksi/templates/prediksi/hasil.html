@@ -1,0 +1,320 @@
+{% extends "core/base.html" %}
+
+{% block title %}Hasil Cek Risiko{% endblock %}
+
+{% block content %}
+<style>
+  .result-wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  .result-card {
+    background: radial-gradient(circle at top left, rgba(252, 231, 243, 0.95), transparent 55%),
+      radial-gradient(circle at bottom right, rgba(254, 249, 195, 0.9), transparent 55%),
+      #ffffff;
+    border-radius: 22px;
+    border: 1px solid rgba(251, 113, 133, 0.3);
+    box-shadow: 0 22px 60px rgba(251, 113, 133, 0.35);
+    backdrop-filter: blur(8px);
+    transform: translateY(24px);
+    opacity: 0;
+    animation: cardIn 0.9s ease-out forwards;
+  }
+
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(251, 113, 133, 0.08);
+    border: 1px solid rgba(251, 113, 133, 0.4);
+    color: #be123c;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .result-score {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .result-low,
+  .result-medium,
+  .result-high {
+    color: #1d4ed8;
+    /* biru */
+  }
+
+  .summary-label {
+    font-size: 0.8rem;
+    color: #7f1d3a;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .summary-value {
+    font-weight: 600;
+    color: #4a1c31;
+  }
+
+  .btn-pink-outline {
+    border-radius: 999px;
+    border: 1px solid rgba(251, 113, 133, 0.7);
+    color: #be123c;
+    font-weight: 600;
+    padding-inline: 22px;
+  }
+
+  .btn-pink-outline:hover {
+    background: rgba(251, 113, 133, 0.08);
+    color: #be123c;
+  }
+
+  .btn-pink-solid {
+    background-image: linear-gradient(120deg, #fb7185, #ec4899, #e879f9);
+    color: #fffdf7;
+    border-radius: 999px;
+    border: none;
+    font-weight: 700;
+    padding-inline: 24px;
+    box-shadow: 0 14px 38px rgba(236, 72, 153, 0.7);
+  }
+
+  @keyframes cardIn {
+    from {
+      opacity: 0;
+      transform: translateY(35px) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+</style>
+
+<div class="container result-wrapper">
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-xl-10">
+      <div class="result-card p-4 p-md-5">
+        <div class="d-flex justify-content-between flex-wrap align-items-center mb-3 gap-2">
+          <span class="result-badge">
+            <i class="bi bi-activity"></i>
+            Hasil Analisis Risiko
+          </span>
+          <small class="text-muted">Gunakan hasil ini sebagai bahan diskusi dengan tenaga kesehatan.</small>
+        </div>
+
+        <div class="row align-items-center g-4">
+          <div class="col-md-5 text-center text-md-start">
+            <p class="summary-label mb-1">Kategori Risiko</p>
+            <div
+              class="result-score {% if level == 'high' %}result-high{% elif level == 'medium' %}result-medium{% else %}result-low{% endif %}">
+              {{ risiko }}
+            </div>
+            <p class="mt-3" style="color:#4a1c31;">{{ deskripsi }}</p>
+          </div>
+
+          <div class="col-md-7">
+            <div class="row g-3">
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Usia Ibu</div>
+                <div class="summary-value">{{ usia }} tahun</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">G/P/A</div>
+                <div class="summary-value">{{ gravida }}/{{ para }}/{{ abortus }}</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Usia Kehamilan</div>
+                <div class="summary-value">{{ usia_kehamilan }} minggu</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Tinggi Badan</div>
+                <div class="summary-value">{{ tinggi_badan }} cm</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Berat Badan</div>
+                <div class="summary-value">{{ berat_badan }} kg</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Tekanan Darah</div>
+                <div class="summary-value">{{ sistolik }}/{{ diastolik }} mmHg</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">Hemoglobin</div>
+                <div class="summary-value">{{ hemoglobin }} g/dL</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">BMI</div>
+                <div class="summary-value">{{ bmi }} kg/m²</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class="summary-label">MAP</div>
+                <div class="summary-value">{{ map_mmHg }} mmHg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between flex-wrap gap-2 mt-4">
+          <a href="{% url 'input_data' %}" class="btn btn-pink-outline">Ulangi Cek Risiko</a>
+          <a href="#" class="btn btn-pink-solid">Simpan / Cetak (opsional)</a>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <h4 class="mb-3">Faktor yang Paling Mempengaruhi Hasil Prediksi</h4>
+
+        <div class="card border-0 shadow-sm"
+          style="border-radius: 18px; background: radial-gradient(circle at top left, rgba(252, 231, 243, 0.9), transparent 55%), radial-gradient(circle at bottom right, rgba(254, 249, 195, 0.9), transparent 55%), #fff; border: 1px solid rgba(251, 113, 133, 0.3);">
+          <div class="card-body">
+            <canvas id="shapBarChart" height="320"></canvas>
+
+            <!-- Data SHAP disimpan tersembunyi agar JS murni tanpa tag template -->
+            <ul id="shapData" class="d-none">
+              {% for item in importance %}
+              <li data-label="{{ item.fitur }}" data-value="{{ item.nilai }}"></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <h4 class="mb-3">Rekomendasi Penanganan Awal</h4>
+        <div class="card border-0 shadow-sm"
+          style="border-radius: 18px; background: #fff7fb; border: 1px solid rgba(251, 113, 133, 0.25); min-height: 120px;">
+          <div class="card-body">
+            {% if risiko == 'NORMAL' %}
+            <h5 class="mb-3" style="color:#1d4ed8; font-weight:600;">Kategori Normal</h5>
+            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+              <li>Pantau kesehatan kehamilan secara rutin sesuai jadwal kunjungan ANC (Antenatal Care) yang dianjurkan
+                tenaga kesehatan</li>
+              <li>Konsumsi nutrisi seimbang dengan banyak sayur, buah, protein, kalsium, zat besi, dan mineral</li>
+              <li>Jaga berat badan tetap ideal dengan melakukan olahraga ringan seperti jalan kaki atau senam hamil
+                sesuai anjuran tenaga kesehatan</li>
+              <li>Hindari merokok, alkohol, dan paparan asap rokok, serta cukup istirahat</li>
+              <li>Selalu waspada pada tanda bahaya seperti bengkak pada wajah atau tangan, sakit kepala berat, pandangan
+                kabur, nyeri perut hebat, atau tekanan darah tinggi, bila muncul salah satu segera periksa ke fasilitas
+                kesehatan terdekat</li>
+            </ul>
+            {% elif risiko == 'EKLAMSIA' %}
+            <h5 class="mb-3" style="color:#be123c; font-weight:700;">Kategori Eklamsia (Darurat Medis)</h5>
+            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+              <li><strong>Segera bawa ibu hamil ke fasilitas kesehatan rujukan atau IGD terdekat</strong> karena
+                eklamsia merupakan kondisi darurat medis yang dapat mengancam nyawa ibu dan janin. Jangan menunda
+                penanganan.</li>
+              <li>Pastikan jalan napas dan posisi aman saat kejang, miringkan tubuh ke sisi kiri untuk mencegah
+                aspirasi, longgarkan pakaian, dan jangan memasukkan benda apa pun ke dalam mulut.</li>
+              <li>Tenaga kesehatan akan memberikan penanganan kejang, umumnya dengan magnesium sulfat sesuai protokol,
+                serta pemantauan ketat fungsi vital ibu.</li>
+              <li>Lakukan pemantauan intensif tekanan darah, denyut nadi, pernapasan, dan kesadaran, serta pemeriksaan
+                laboratorium untuk menilai fungsi ginjal, hati, dan kondisi darah.</li>
+              <li>Kendalikan tekanan darah tinggi menggunakan obat antihipertensi yang aman sesuai anjuran tenaga medis.
+              </li>
+              <li>Pantau kondisi janin secara ketat, termasuk denyut jantung janin dan kesejahteraannya melalui
+                pemeriksaan obstetri.</li>
+              <li>Persiapkan tindakan persalinan bila kondisi ibu atau janin memburuk, karena satu-satunya terapi
+                definitif eklamsia adalah terminasi kehamilan sesuai indikasi medis.</li>
+              <li>Berikan perawatan lanjutan pascakejang dan pascapersalinan, termasuk observasi intensif karena kejang
+                dapat terjadi kembali setelah melahirkan.</li>
+              <li>Libatkan keluarga dalam edukasi kondisi darurat, tanda bahaya lanjutan, dan pentingnya kontrol
+                pascapersalinan untuk mencegah komplikasi berulang.</li>
+            </ul>
+            {% else %}
+            <h5 class="mb-3" style="color:#1d4ed8; font-weight:600;">Kategori Berisiko Preeklamsia</h5>
+            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+              <li>Segera konsultasi ke tenaga kesehatan terdekat untuk pemeriksaan tekanan darah, protein urin, dan
+                penilaian faktor risiko secara berkala sesuai jadwal yang ditentukan.</li>
+              <li>Pantau tanda peringatan seperti sakit kepala berat, penglihatan kabur, nyeri ulu hati atau perut
+                bagian atas, sesak napas, dan pembengkakan tiba-tiba pada wajah, tangan, atau kaki, lalu segera ke
+                fasilitas kesehatan bila terjadi.</li>
+              <li>Konsumsi nutrisi seimbang dengan banyak sayur, buah, protein, kalsium, zat besi, dan mineral, batasi
+                asupan garam berlebih, serta tidak merokok dan tidak mengonsumsi alkohol.</li>
+              <li>Lakukan olahraga ringan yang aman seperti jalan kaki atau senam hamil bila sudah memasuki akhir
+                trimester kedua hingga trimester ketiga sesuai anjuran tenaga kesehatan.</li>
+              <li>Istirahat yang cukup, usahakan tidur berkualitas dan mengurangi aktivitas fisik berat sesuai saran
+                tenaga kesehatan.</li>
+              <li>Kurangi stres dengan relaksasi, dukungan keluarga, dan konsultasi bila merasa cemas atau tertekan
+                selama kehamilan.</li>
+              <li>Catat tekanan darah, berat badan, dan keluhan harian di buku pemantauan untuk ditunjukkan saat
+                kontrol, serta ikuti semua anjuran tenaga kesehatan termasuk penggunaan vitamin dan rencana perawatan
+                atau pencegahan komplikasi sesuai hasil pemeriksaan.</li>
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  (function () {
+    const ctx = document.getElementById('shapBarChart');
+    if (!ctx) return;
+
+    const dataEls = document.querySelectorAll('#shapData li');
+    const labels = [];
+    const values = [];
+    dataEls.forEach(el => {
+      labels.push(el.dataset.label);
+      values.push(parseFloat(el.dataset.value));
+    });
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '|SHAP| (semakin besar semakin berpengaruh)',
+          data: values,
+          backgroundColor: 'rgba(236, 72, 153, 0.6)',
+          borderColor: 'rgba(236, 72, 153, 1)',
+          borderWidth: 1.5,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              boxWidth: 12,
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const v = context.raw;
+                return ' ' + v.toFixed(4);
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Nilai rata-rata |SHAP|',
+            }
+          },
+          y: {
+            title: {
+              display: false,
+            }
+          }
+        }
+      }
+    });
+  })();
+</script>
+
+{% endblock content %}

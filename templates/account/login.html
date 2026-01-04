@@ -1,0 +1,484 @@
+{% load i18n static allauth account socialaccount widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% trans "Login Akun" %}</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap (optional, dipakai untuk utilitas) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+
+  <style>
+    :root {
+      --bg-1: #fff7fb;
+      --bg-2: #ffffff;
+      --accent-a: #f973a3;
+      --accent-b: #fb7185;
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(251, 113, 133, 0.35);
+      --card-radius: 18px;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(254, 205, 211, 0.9), transparent 35%),
+        radial-gradient(900px 500px at 90% 90%, rgba(254, 249, 195, 0.85), transparent 35%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: #4a1c31;
+      overflow: hidden;
+    }
+
+    /* Animated gradient overlay for subtle motion */
+    .moving-gradient {
+      position: fixed;
+      inset: -20% -20%;
+      background: linear-gradient(120deg, rgba(254, 205, 211, 0.8), rgba(252, 231, 243, 0.9), rgba(254, 249, 195, 0.8));
+      filter: blur(70px) saturate(130%);
+      animation: floatGrad 16s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes floatGrad {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(6%, -4%, 0) rotate(15deg);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+    }
+
+    /* Floating decorative shapes */
+    .shape {
+      position: absolute;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+      border: 1px solid rgba(251, 113, 133, 0.25);
+      box-shadow: 0 8px 30px rgba(248, 113, 133, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      transform: translateZ(0);
+      animation: float 8s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .shape.s1 {
+      width: 220px;
+      height: 120px;
+      left: -50px;
+      top: 40px;
+      border-radius: 28px;
+      animation-duration: 12s;
+      box-shadow: 0 0 35px rgba(236, 72, 153, 0.55);
+    }
+
+    .shape.s2 {
+      width: 160px;
+      height: 160px;
+      right: -60px;
+      bottom: 80px;
+      border-radius: 50%;
+      animation-duration: 10s;
+      box-shadow: 0 0 35px rgba(192, 132, 252, 0.55);
+    }
+
+    .shape.s3 {
+      width: 100px;
+      height: 220px;
+      left: 10%;
+      bottom: -60px;
+      transform: rotate(12deg);
+      animation-duration: 14s;
+      box-shadow: 0 0 35px rgba(244, 114, 182, 0.45);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.95;
+      }
+
+      50% {
+        transform: translateY(-18px) rotate(4deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.95;
+      }
+    }
+
+    /* Center card full page */
+    .wrap {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      padding: 48px 20px;
+      box-sizing: border-box;
+    }
+
+    .glass-card {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.016));
+      border-radius: var(--card-radius);
+      border: 1px solid var(--glass-border);
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+      backdrop-filter: blur(8px) saturate(120%);
+      overflow: hidden;
+    }
+
+    /* Left showcase */
+    .showcase {
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      position: relative;
+      min-height: 360px;
+    }
+
+    .logo-badge {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 10px;
+      align-items: center;
+      font-weight: 700;
+      color: #e11d48;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 6px 14px;
+      border-radius: 999px;
+      width: fit-content;
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      box-shadow: 0 10px 30px rgba(251, 113, 133, 0.45);
+    }
+
+    .showcase h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .showcase p {
+      margin: 0;
+      color: #4a1c31;
+      opacity: 0.9;
+      font-size: 14.5px;
+    }
+
+    /* Right column (form) */
+    .panel {
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .panel h3 {
+      margin: 0;
+      color: #be123c;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .social-btn {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+      background: #fff;
+      color: #202124;
+      border: 1px solid #e6e6e6;
+      font-weight: 600;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.24);
+    }
+
+    .social-icon {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+    }
+
+    .divider-plain {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      color: rgba(230, 238, 248, 0.72);
+      font-size: 13px;
+    }
+
+    .divider-plain::before,
+    .divider-plain::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Form fields */
+    .form-control {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(251, 113, 133, 0.4);
+      color: #4a1c31;
+      padding: 12px 14px;
+      border-radius: 10px;
+      transition: box-shadow .12s ease, transform .12s ease, border-color .12s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.12);
+      border-color: rgba(124, 58, 237, 0.9);
+      transform: translateY(-1px);
+      color: #fff;
+    }
+
+    label.form-label {
+      color: #7f1d3a;
+      font-weight: 600;
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      border: none;
+      box-shadow: 0 8px 26px rgba(6, 182, 212, 0.12);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      color: white;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(7, 12, 45, 0.36);
+    }
+
+    /* small extras */
+    .muted {
+      color: #7f1d3a;
+      font-size: 13px;
+    }
+
+    .signup-link {
+      color: #e11d48;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* entrance animations */
+    .fade-up {
+      animation: fadeUp .7s cubic-bezier(.2, .9, .2, 1) both;
+    }
+
+    .fade-left {
+      animation: fadeLeft .8s cubic-bezier(.2, .9, .2, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeLeft {
+      from {
+        opacity: 0;
+        transform: translateX(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* responsive */
+    @media (max-width:900px) {
+      .glass-card {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .showcase {
+        order: 2;
+        padding: 20px 12px;
+        text-align: center;
+      }
+
+      .panel {
+        order: 1;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="moving-gradient" aria-hidden="true"></div>
+  <div class="shape s1" aria-hidden="true"></div>
+  <div class="shape s2" aria-hidden="true"></div>
+  <div class="shape s3" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="glass-card fade-up" role="main" aria-labelledby="loginTitle">
+      <!-- SHOWCASE / LEFT -->
+      <div class="showcase fade-left" aria-hidden="false">
+        <div class="logo-badge" aria-hidden="true">
+          <!-- simple mark -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="url(#loginGradient)" />
+            <defs>
+              <linearGradient id="loginGradient" x1="0" x2="1">
+                <stop offset="0" stop-color="#fb7185" />
+                <stop offset="1" stop-color="#f973e0" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span style="font-size:14px">Sistem Deteksi Risiko Kehamilan</span>
+        </div>
+
+        <h1 style="margin-top:12px">Selamat Datang kembali 👋</h1>
+        <p class="muted">Masuk untuk melanjutkan akses ke dashboard. Kami menggunakan autentikasi modern: Google SSO &
+          akun lokal.</p>
+
+        <div style="margin-top:10px">
+          <small class="muted">Keamanan:</small>
+          <div class="muted" style="font-size:13px; margin-top:6px">
+            Enkripsi terenkripsi, session aman, dan riwayat login tercatat. Jika butuh bantuan, hubungi admin.
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL / RIGHT (FORM) -->
+      <div class="panel fade-up" aria-labelledby="loginTitle">
+        <h3 id="loginTitle">Masuk ke Akun Anda</h3>
+
+        <!-- Social login button (Google) -->
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+        {% for provider in socialaccount_providers %}
+        {% if provider.id == 'google' %}
+        <a href="{% provider_login_url provider.id process='login' %}" class="social-btn"
+          title="Masuk dengan {{ provider.name }}">
+          <!-- official-ish Google SVG icon -->
+          <svg class="social-icon" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M533.5 278.4c0-18.2-1.6-36-4.7-53.1H272v100.6h147.5c-6.3 34-25.3 62.8-53.9 82v67h87"
+              fill="#4285F4" />
+            <path
+              d="M272 544.3c72.6 0 133.7-23.9 178.3-64.9l-87-67c-24.1 16.1-55 25.6-91.3 25.6-70 0-129.4-47.2-150.6-111.1H32.4v69.6C76.8 486 168.6 544.3 272 544.3z"
+              fill="#34A853" />
+            <path
+              d="M121.4 328.9c-5.6-16.4-8.8-33.9-8.8-51.9s3.2-35.5 8.8-51.9V155.5H32.4C11.5 196.4 0 236.5 0 276.9c0 40.3 11.5 80.4 32.4 121.4l89-69.4z"
+              fill="#FBBC05" />
+            <path
+              d="M272 108.1c38.4 0 73 13.2 100.3 39.1l75.1-75.1C405.2 23.7 344.1 0 272 0 168.6 0 76.8 58.3 32.4 144.1l89 69.6C142.6 155.3 202 108.1 272 108.1z"
+              fill="#EA4335" />
+          </svg>
+          <span>Masuk dengan Google</span>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <div class="divider-plain" aria-hidden="true"><span>atau</span></div>
+
+        <!-- Local login form -->
+        <form class="login" method="POST" action="{% url 'account_login' %}" novalidate>
+          {% csrf_token %}
+
+          {% for field in form %}
+          {% if field.name != 'remember' %}
+          <div class="mb-3">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+            {% for error in field.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% endfor %}
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <a class="muted" href="{% url 'account_reset_password' %}">Lupa Kata Sandi?</a>
+            {% if form.remember %}
+            <div class="form-check">
+              {{ form.remember|add_class:"form-check-input" }}
+              <label class="form-check-label muted" for="{{ form.remember.id_for_label }}">Ingat Saya</label>
+            </div>
+            {% endif %}
+          </div>
+
+          <button class="btn btn-primary-custom w-100 mb-2" type="submit">{% trans "Login" %}</button>
+        </form>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:6px;">
+          <div class="muted">Belum punya akun?</div>
+          <a class="signup-link" href="{% url 'account_signup' %}">Daftar Sekarang →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- small JS: focus animation for inputs (enhance UX) -->
+  <script>
+    (function () {
+      document.querySelectorAll('.form-control').forEach(function (el) {
+        el.addEventListener('focus', function () { el.classList.add('focused'); });
+        el.addEventListener('blur', function () { el.classList.remove('focused'); });
+      });
+    })();
+  </script>
+</body>
+
+</html>

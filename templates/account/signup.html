@@ -1,0 +1,310 @@
+{% load i18n static allauth account socialaccount widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% trans "Daftar Akun Baru" %}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+
+  <style>
+    :root {
+      --bg-1: #fff7fb;
+      --bg-2: #ffffff;
+      --accent-a: #f973a3;
+      --accent-b: #fb7185;
+      --glass-border: rgba(251, 113, 133, 0.35);
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', system-ui;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(254, 205, 211, 0.9), transparent 35%),
+        radial-gradient(900px 500px at 90% 90%, rgba(254, 249, 195, 0.85), transparent 35%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: #4a1c31;
+      overflow: hidden;
+    }
+
+    .moving-gradient {
+      position: fixed;
+      inset: -20% -20%;
+      background: linear-gradient(120deg, rgba(254, 205, 211, 0.8), rgba(252, 231, 243, 0.9), rgba(254, 249, 195, 0.8));
+      filter: blur(70px);
+      animation: floatGrad 16s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes floatGrad {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: translate3d(6%, -4%, 0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+      border: 1px solid rgba(251, 113, 133, 0.25);
+      box-shadow: 0 8px 30px rgba(248, 113, 133, 0.25);
+      animation: float 8s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .shape.s1 {
+      width: 220px;
+      height: 120px;
+      left: -50px;
+      top: 40px;
+      border-radius: 28px;
+      animation-duration: 12s;
+    }
+
+    .shape.s2 {
+      width: 160px;
+      height: 160px;
+      right: -60px;
+      bottom: 80px;
+      border-radius: 50%;
+      animation-duration: 10s;
+    }
+
+    .shape.s3 {
+      width: 100px;
+      height: 220px;
+      left: 10%;
+      bottom: -60px;
+      animation-duration: 14s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-18px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 20px;
+      z-index: 2;
+    }
+
+    .glass-card {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+      backdrop-filter: blur(8px) saturate(120%);
+      overflow: hidden;
+      width: 100%;
+      max-width: 980px;
+    }
+
+    .showcase {
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .showcase h1 {
+      font-weight: 800;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #be123c;
+    }
+
+    .showcase p {
+      opacity: .95;
+      font-size: 14.5px;
+      color: #4a1c31;
+    }
+
+    .logo-badge {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 10px;
+      align-items: center;
+      font-weight: 700;
+      color: #e11d48;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 6px 14px;
+      border-radius: 999px;
+      width: fit-content;
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      box-shadow: 0 10px 30px rgba(251, 113, 133, 0.45);
+      margin-bottom: 10px;
+    }
+
+    .panel {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.96));
+      border-left: 1px solid rgba(251, 113, 133, 0.25);
+    }
+
+    label.form-label {
+      color: #7f1d3a;
+      font-weight: 600;
+    }
+
+    .form-control {
+      background: #fff7fb;
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      color: #4a1c31;
+      padding: 12px 14px;
+      border-radius: 10px;
+    }
+
+    .form-control:focus {
+      border-color: rgba(236, 72, 153, 0.9);
+      box-shadow: 0 6px 20px rgba(244, 114, 182, 0.25);
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(120deg, #fb7185, #ec4899, #e879f9);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      padding: 12px;
+      color: #fffdf7;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(7, 12, 45, 0.36);
+    }
+
+    .muted {
+      color: #7f1d3a;
+      font-size: 13px;
+    }
+
+    .login-link {
+      color: #e11d48;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .fade-up {
+      animation: fadeUp .8s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media(max-width:900px) {
+      .glass-card {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .showcase {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="moving-gradient"></div>
+  <div class="shape s1"></div>
+  <div class="shape s2"></div>
+  <div class="shape s3"></div>
+
+  <div class="wrap">
+    <div class="glass-card fade-up">
+      <!-- KIRI -->
+      <div class="showcase">
+        <div class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="url(#signupGradient)" />
+            <defs>
+              <linearGradient id="signupGradient" x1="0" x2="1">
+                <stop offset="0" stop-color="#fb7185" />
+                <stop offset="1" stop-color="#f973e0" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>Sistem Deteksi Risiko Kehamilan</span>
+        </div>
+        <h1>Buat Akun Baru ✨</h1>
+        <p>Daftar sekarang untuk mulai menggunakan sistem prediksi risiko kehamilan berbasis kecerdasan buatan.</p>
+        <p class="muted" style="margin-top:12px;">Keamanan data Anda dijamin dengan autentikasi terenkripsi dan sistem
+          terverifikasi.</p>
+      </div>
+
+      <!-- KANAN -->
+      <div class="panel">
+        <h3 style="font-weight:700;">Daftar Akun</h3>
+        <form method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+            {% for error in field.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-primary-custom w-100">{% trans "Daftar Sekarang" %}</button>
+        </form>
+
+        <div class="d-flex justify-content-center align-items-center gap-2 mt-3">
+          <div class="muted">Sudah punya akun?</div>
+          <a class="login-link" href="{% url 'account_login' %}">Masuk →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

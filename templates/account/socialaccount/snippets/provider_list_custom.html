@@ -1,0 +1,32 @@
+{% load socialaccount %}
+
+<ul class="list-unstyled">
+{% for provider in socialaccount.providers %}
+    {% if provider.id == 'google' %}
+    <li class="mb-3">
+        <a title="{{ provider.name }}" class="btn w-100 d-flex align-items-center justify-content-center border rounded-pill py-2 px-3 shadow-sm"
+           href="{% provider_login_url provider.id process=process scope=provider.scope element='button' %}"
+           style="background-color: #fff; color: #3c4043; font-weight: 500; font-size: 16px; transition: all 0.2s ease-in-out;">
+           
+           <!-- Logo Google -->
+           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                alt="Google logo" width="20" height="20" class="me-2">
+
+           <span>Masuk dengan Google</span>
+        </a>
+    </li>
+    <style>
+        a.btn:hover {
+            background-color: #f7f8f8 !important;
+            box-shadow: 0 2px 6px rgba(60, 64, 67, 0.15);
+        }
+    </style>
+    {% endif %}
+{% empty %}
+    <li>
+        <a href="{% url 'socialaccount_connections' %}">
+            {% trans 'Kelola akun sosial Anda' %}
+        </a>
+    </li>
+{% endfor %}
+</ul>

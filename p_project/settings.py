@@ -59,12 +59,12 @@ SITE_ID = 1  # Kita akan pastikan ID ini benar di langkah berikutnya
 LOGIN_REDIRECT_URL = '/'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
 ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email', 'password']  # Kembalikan field password
-ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ['email']  # Password tidak perlu ditulis di sini, akan otomatis muncul
+ACCOUNT_PASSWORD_REQUIRED = True   # Pastikan password wajib
+ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-
 # Allauth behavior: hilangkan halaman konfirmasi logout & login sosial polos
 ACCOUNT_LOGOUT_ON_GET = True              # logout langsung via GET dan redirect
 SOCIALACCOUNT_LOGIN_ON_GET = True         # klik login sosial langsung redirect ke provider tanpa konfirmasi dulu

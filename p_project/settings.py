@@ -55,8 +55,8 @@ INSTALLED_APPS = [
 SITE_ID = 1  # Kita akan pastikan ID ini benar di langkah berikutnya
 LOGIN_REDIRECT_URL = '/'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_SIGNUP_FIELDS = ['email', 'username']
 ACCOUNT_EMAIL_VERIFICATION = "none" 
 
 # Allauth behavior: hilangkan halaman konfirmasi logout & login sosial polos

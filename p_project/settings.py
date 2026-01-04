@@ -59,9 +59,9 @@ SITE_ID = 1  # Kita akan pastikan ID ini benar di langkah berikutnya
 LOGIN_REDIRECT_URL = '/'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
 ACCOUNT_LOGIN_METHODS = {'email'}
-# Allauth terbaru (0.57+) menghapus 'password' dari SIGNUP_FIELDS karena dianggap default jika tidak spesifik.
-# Namun kita bisa pakai 'email' saja, lalu password otomatis ada.
-ACCOUNT_SIGNUP_FIELDS = ['email'] 
+ACCOUNT_SIGNUP_FIELDS = ['email', 'password']  # Kembalikan field password
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 

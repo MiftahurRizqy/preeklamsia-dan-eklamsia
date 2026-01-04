@@ -1,0 +1,8 @@
+Django
+django-allauth
+django-widget-tweaks
+gunicorn
+whitenoise
+scikit-learn
+pandas
+numpy

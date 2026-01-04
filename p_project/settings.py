@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-rt-&=)jgxjw3z7@2(eoanol$ygc-hk-tu^%&uo#i*w=^8mh&g4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
 
 
 # Application definition
@@ -65,6 +67,7 @@ SOCIALACCOUNT_LOGIN_ON_GET = True         # klik login sosial langsung redirect 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "allauth.account.middleware.AccountMiddleware", 
     "django.middleware.common.CommonMiddleware",
@@ -144,6 +147,8 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

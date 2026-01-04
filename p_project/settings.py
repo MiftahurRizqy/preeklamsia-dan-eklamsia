@@ -58,8 +58,11 @@ INSTALLED_APPS = [
 SITE_ID = 1  # Kita akan pastikan ID ini benar di langkah berikutnya
 LOGIN_REDIRECT_URL = '/'          
 ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
-ACCOUNT_LOGIN_METHODS = {'email', 'username'}
-ACCOUNT_SIGNUP_FIELDS = ['email', 'username']
+ACCOUNT_LOGIN_METHODS = {'email'}  # Login pakai email saja lebih modern
+ACCOUNT_SIGNUP_FIELDS = ['email']    # Signup cukup email
+ACCOUNT_USERNAME_REQUIRED = False    # Username tidak wajib
+ACCOUNT_EMAIL_REQUIRED = True        # Email wajib (legacy support)
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https" # Paksa HTTPS untuk callback URL
 ACCOUNT_EMAIL_VERIFICATION = "none" 
 
 # Allauth behavior: hilangkan halaman konfirmasi logout & login sosial polos

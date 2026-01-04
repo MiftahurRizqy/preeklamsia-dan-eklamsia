@@ -65,6 +65,7 @@ SOCIALACCOUNT_LOGIN_ON_GET = True         # klik login sosial langsung redirect 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "allauth.account.middleware.AccountMiddleware", 
     "django.middleware.common.CommonMiddleware",

@@ -14,7 +14,7 @@
   <div class="container">
     <div class="row align-items-center justify-content-between">
       <div class="col-lg-6 col-md-12 hero-content" data-aos="fade-up">
-        <h2 style="color: #e11d48; font-weight: 600;">Apa Itu Preeklamsia & Eklamsia?</h2>
+        <h2>Apa Itu Preeklamsia & Eklamsia?</h2>
         <p>Preeklamsia merupakan komplikasi kehamilan yang ditandai dengan tekanan darah tinggi dan kerusakan organ,
           sedangkan <strong>eklamsia</strong> adalah kondisi lanjutan yang lebih serius disertai kejang.</p>
         <p>Sistem ini hadir untuk membantu tenaga medis dan calon ibu dalam memantau serta mendeteksi potensi risiko
@@ -23,7 +23,7 @@
 
         <a href="{% url 'input_data' %}" class="btn-go">Cek Sekarang Yuk!</a>
       </div>
-      <div class="col-lg-5 col-md-12 hero-img" data-aos="zoom-in">
+      <div class="col-lg-5 col-md-12 hero-img" data-aos="zoom-in" data-aos-delay="200">
         <img src="{% static 'ibuhamil.png' %}" alt="ibuhamil">
       </div>
     </div>
@@ -31,19 +31,19 @@
 </section>
 
 <style>
-  /* 🌌 Latar belakang aurora bergerak (cerah pink pastel) */
+  /* 🌌 Latar belakang aurora bergerak (Baby Blue Theme) */
   body {
     background:
-      radial-gradient(ellipse at bottom, #ffe4e6 0%, #fff7fb 55%, #ffffff 100%),
-      radial-gradient(circle at top left, rgba(254, 205, 211, 0.8), transparent 60%),
-      radial-gradient(circle at bottom right, rgba(254, 249, 195, 0.7), transparent 60%);
+      radial-gradient(ellipse at bottom, #e0f2fe 0%, #f0f9ff 55%, #ffffff 100%),
+      radial-gradient(circle at top left, rgba(186, 230, 253, 0.4), transparent 60%),
+      radial-gradient(circle at bottom right, rgba(125, 211, 252, 0.4), transparent 60%);
     overflow-x: hidden;
-    color: #3f1d38;
+    color: #334155;
     position: relative;
     font-family: 'Poppins', sans-serif;
   }
 
-  /* Efek aurora pink pastel */
+  /* Efek aurora biru lembut */
   .aurora {
     position: fixed;
     top: 0;
@@ -51,15 +51,16 @@
     width: 200%;
     height: 200%;
     background: conic-gradient(from 200deg at 50% 50%,
-        rgba(251, 113, 133, 0.3),
-        rgba(254, 205, 211, 0.4),
-        rgba(254, 249, 195, 0.35),
-        rgba(255, 237, 213, 0.35),
-        rgba(251, 113, 133, 0.3));
-    mix-blend-mode: screen;
-    filter: blur(150px);
-    animation: rotate 26s linear infinite;
+        rgba(125, 211, 252, 0.2),
+        rgba(224, 242, 254, 0.3),
+        rgba(186, 230, 253, 0.25),
+        rgba(56, 189, 248, 0.15),
+        rgba(125, 211, 252, 0.2));
+    mix-blend-mode: multiply;
+    filter: blur(120px);
+    animation: rotate 30s linear infinite;
     z-index: -1;
+    pointer-events: none;
   }
 
   @keyframes rotate {
@@ -72,57 +73,19 @@
     }
   }
 
-  /* ✨ Efek partikel lembut (glow pink) */
-  .particle {
-    position: absolute;
-    background: radial-gradient(circle at 30% 30%, #ffe4f4, #fb7185);
-    border-radius: 50%;
-    animation: float 12s infinite ease-in-out;
-  }
+  /* ✨ Efek partikel lembut (glow blue) is handled by base.html but we can add more depth here if needed */
 
-  .particle:nth-child(1) {
-    width: 8px;
-    height: 8px;
-    left: 10%;
-    animation-delay: 0s;
-  }
-
-  .particle:nth-child(2) {
-    width: 10px;
-    height: 10px;
-    left: 50%;
-    animation-delay: 2s;
-  }
-
-  .particle:nth-child(3) {
-    width: 6px;
-    height: 6px;
-    left: 80%;
-    animation-delay: 4s;
-  }
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0) scale(1);
-    }
-
-    50% {
-      transform: translateY(-60px) scale(1.2);
-    }
-  }
-
-  /* 🌿 Section umum dengan glass pink cerah */
+  /* 🌿 Section umum dengan glass blue */
   .section,
   .section-edu {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
     padding: 3rem;
     margin: 5rem auto;
     max-width: 1000px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 22px 45px rgba(251, 113, 133, 0.25);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.15);
     transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 1s ease;
     opacity: 0;
     transform: translateY(50px);
@@ -136,23 +99,26 @@
 
   .section:hover,
   .section-edu:hover {
-    transform: scale(1.02);
-    box-shadow: 0 28px 60px rgba(251, 113, 133, 0.35);
+    transform: scale(1.01);
+    box-shadow: 0 25px 60px rgba(14, 165, 233, 0.25);
   }
 
   .section h2,
   .section-edu h2 {
-    color: #e11d48;
-    font-weight: 600;
+    color: #0284c7;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     text-align: center;
+    position: relative;
+    display: inline-block;
+    width: 100%;
   }
 
   .section p,
   .section-edu p {
-    color: #4a1c31;
+    color: #475569;
     line-height: 1.8;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     text-align: justify;
   }
 
@@ -166,70 +132,54 @@
   }
 
   .card-info {
-    background: #fff7fb;
-    border: 1px solid rgba(251, 113, 133, 0.3);
-    border-radius: 15px;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+    border: 1px solid rgba(186, 230, 253, 0.5);
+    border-radius: 20px;
     width: 280px;
     padding: 2rem 1.5rem;
     text-align: center;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 6px rgba(14, 165, 233, 0.05);
   }
 
   .card-info:hover {
     transform: translateY(-10px);
-    box-shadow: 0 0 35px rgba(236, 72, 153, 0.5);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.2);
+    border-color: #7dd3fc;
   }
 
   .card-info h3 {
-    color: #be123c;
+    color: #0369a1;
     margin-bottom: 1rem;
     font-size: 1.3rem;
+    font-weight: 700;
   }
 
   .card-info p {
-    color: #7f1d3a;
+    color: #64748b;
     font-size: 0.95rem;
     line-height: 1.6;
+    text-align: center;
   }
 
   /* 🌺 CTA Button */
   .btn-start {
     display: inline-block;
-    background: linear-gradient(120deg, #fb7185, #ec4899, #e879f9);
-    color: #fffdf7;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #fff;
     border: none;
     font-weight: 600;
     border-radius: 50px;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 2.5rem;
     margin-top: 2rem;
-    box-shadow: 0 0 24px rgba(236, 72, 153, 0.6);
+    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
     transition: all 0.4s ease;
   }
 
   .btn-start:hover {
-    background: linear-gradient(120deg, #f973e0, #fb7185, #f9a8d4);
-    transform: translateY(-1px) scale(1.08);
-    box-shadow: 0 0 40px rgba(236, 72, 153, 0.9);
-  }
-
-  /* 🧘 Footer sederhana ala WordPress */
-  .footer {
-    text-align: center;
-    padding: 2rem;
-    color: #be123c;
-    font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.96);
-    border-top: 1px solid rgba(251, 113, 133, 0.35);
-  }
-
-  .footer a {
-    color: #f472b6;
-    text-decoration: none;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.6);
   }
 
   /* Responsif */
@@ -238,6 +188,7 @@
     .section,
     .section-edu {
       padding: 2rem;
+      margin: 3rem 1rem;
     }
 
     .info-cards {
@@ -248,11 +199,6 @@
 </style>
 
 <div class="aurora"></div>
-<div class="particle"></div>
-<div class="particle"></div>
-<div class="particle"></div>
-
-
 
 <section class="section" id="warning">
   <h2>⚠️ Tanda Bahaya pada Ibu Hamil</h2>
@@ -263,11 +209,11 @@
         <strong>jangan menunda</strong> untuk mencari pertolongan. Segera bawa ibu hamil ke fasilitas kesehatan
         terdekat, seperti:
       </p>
-      <ul style="color: #4a1c31; padding-left: 1.4rem;">
-        <li>Puskesmas</li>
-        <li>Rumah Sakit</li>
-        <li>Bidan praktik mandiri</li>
-        <li>Dokter spesialis kandungan</li>
+      <ul style="color: #334155; padding-left: 1.4rem; list-style-type: circle;">
+        <li style="margin-bottom: 8px;">Puskesmas</li>
+        <li style="margin-bottom: 8px;">Rumah Sakit</li>
+        <li style="margin-bottom: 8px;">Bidan praktik mandiri</li>
+        <li style="margin-bottom: 8px;">Dokter spesialis kandungan</li>
       </ul>
       <p>
         Penanganan cepat dan tepat dapat mencegah komplikasi serius dan menyelamatkan
@@ -276,7 +222,7 @@
     </div>
     <div class="col-md-12" style="text-align: center; margin-top: 2rem;">
       <img src="{% static 'Muntah.png' %}" alt="Tanda bahaya ibu hamil"
-        style="max-width: 90%; border-radius: 16px; box-shadow: 0 22px 50px rgba(236, 72, 153, 0.4);">
+        style="max-width: 90%; border-radius: 20px; box-shadow: 0 20px 50px rgba(14, 165, 233, 0.25); border: 4px solid #fff;">
     </div>
   </div>
 </section>
@@ -290,7 +236,6 @@
       secara berkala</strong> di fasilitas kesehatan terdekat.
     Edukasi dan deteksi dini merupakan langkah terbaik dalam mencegah komplikasi serius yang membahayakan ibu dan bayi.
   </p>
-
 </section>
 
 <section class="section" id="edu2">
@@ -298,20 +243,21 @@
   <p>Sistem ini memanfaatkan algoritma <strong>Random Forest</strong> dan interpretasi <strong>SHAP</strong> untuk
     membaca pola dari berbagai parameter klinis ibu hamil.</p>
   <div class="info-cards">
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up" data-aos-delay="0">
       <h3>🎓 Latar Belakang</h3>
       <p>Dikembangkan dari penelitian tugas akhir yang berfokus pada deteksi dini risiko preeklamsia.</p>
     </div>
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up" data-aos-delay="100">
       <h3>🧪 Metodologi</h3>
       <p>Menggunakan dataset klinis terpilih dan model Random Forest yang diuji dengan evaluasi statistik.</p>
     </div>
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up" data-aos-delay="200">
       <h3>💻 Teknologi</h3>
       <p>Dibangun dengan Django, Bootstrap, dan pustaka machine learning Python.</p>
     </div>
   </div>
 </section>
+
 <script>
   // ✨ Animasi muncul saat scroll
   const sections = document.querySelectorAll(".section, .section-edu");

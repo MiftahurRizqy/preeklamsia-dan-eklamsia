@@ -10,83 +10,104 @@
   }
 
   .result-card {
-    background: radial-gradient(circle at top left, rgba(252, 231, 243, 0.95), transparent 55%),
-      radial-gradient(circle at bottom right, rgba(254, 249, 195, 0.9), transparent 55%),
+    background: radial-gradient(circle at top left, rgba(224, 242, 254, 0.9), transparent 55%),
+      radial-gradient(circle at bottom right, rgba(240, 249, 255, 0.95), transparent 55%),
       #ffffff;
-    border-radius: 22px;
-    border: 1px solid rgba(251, 113, 133, 0.3);
-    box-shadow: 0 22px 60px rgba(251, 113, 133, 0.35);
-    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    border: 1px solid rgba(186, 230, 253, 0.5);
+    box-shadow: 0 20px 60px rgba(14, 165, 233, 0.15);
+    backdrop-filter: blur(12px);
     transform: translateY(24px);
     opacity: 0;
-    animation: cardIn 0.9s ease-out forwards;
+    animation: cardIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
 
   .result-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 14px;
+    padding: 6px 16px;
     border-radius: 999px;
-    background: rgba(251, 113, 133, 0.08);
-    border: 1px solid rgba(251, 113, 133, 0.4);
-    color: #be123c;
-    font-size: 0.85rem;
+    background: rgba(224, 242, 254, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #0284c7;
+    font-size: 0.9rem;
     font-weight: 600;
   }
 
   .result-score {
-    font-size: 2.6rem;
+    font-size: 2.8rem;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.02em;
+    margin: 10px 0;
   }
 
-  .result-low,
-  .result-medium,
+  .result-low {
+    color: #0ea5e9;
+    /* Sky Blue for Normal */
+  }
+
+  .result-medium {
+    color: #f59e0b;
+    /* Amber for Risk */
+  }
+
   .result-high {
-    color: #1d4ed8;
-    /* biru */
+    color: #ef4444;
+    /* Soft Red for Danger */
   }
 
   .summary-label {
-    font-size: 0.8rem;
-    color: #7f1d3a;
+    font-size: 0.85rem;
+    color: #64748b;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
+    font-weight: 600;
   }
 
   .summary-value {
     font-weight: 600;
-    color: #4a1c31;
+    color: #334155;
+    font-size: 1.05rem;
   }
 
-  .btn-pink-outline {
+  .btn-blue-outline {
     border-radius: 999px;
-    border: 1px solid rgba(251, 113, 133, 0.7);
-    color: #be123c;
+    border: 1px solid rgba(14, 165, 233, 0.5);
+    color: #0284c7;
     font-weight: 600;
-    padding-inline: 22px;
+    padding: 10px 24px;
+    background: transparent;
+    transition: all 0.2s ease;
   }
 
-  .btn-pink-outline:hover {
-    background: rgba(251, 113, 133, 0.08);
-    color: #be123c;
+  .btn-blue-outline:hover {
+    background: rgba(224, 242, 254, 0.5);
+    color: #0369a1;
+    border-color: #0ea5e9;
   }
 
-  .btn-pink-solid {
-    background-image: linear-gradient(120deg, #fb7185, #ec4899, #e879f9);
-    color: #fffdf7;
+  .btn-blue-solid {
+    background-image: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #ffffff;
     border-radius: 999px;
     border: none;
     font-weight: 700;
-    padding-inline: 24px;
-    box-shadow: 0 14px 38px rgba(236, 72, 153, 0.7);
+    padding: 10px 26px;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .btn-blue-solid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.45);
+    background-image: linear-gradient(135deg, #0ea5e9, #0284c7);
   }
 
   @keyframes cardIn {
     from {
       opacity: 0;
-      transform: translateY(35px) scale(0.98);
+      transform: translateY(40px) scale(0.98);
     }
 
     to {
@@ -94,13 +115,26 @@
       transform: translateY(0) scale(1);
     }
   }
+
+  .card-recommendation {
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid rgba(186, 230, 253, 0.5);
+    min-height: 120px;
+    transition: all 0.3s ease;
+  }
+
+  .card-recommendation:hover {
+    box-shadow: 0 10px 30px rgba(148, 163, 184, 0.1);
+    border-color: #38bdf8;
+  }
 </style>
 
 <div class="container result-wrapper">
   <div class="row justify-content-center">
     <div class="col-lg-11 col-xl-10">
       <div class="result-card p-4 p-md-5">
-        <div class="d-flex justify-content-between flex-wrap align-items-center mb-3 gap-2">
+        <div class="d-flex justify-content-between flex-wrap align-items-center mb-4 gap-3">
           <span class="result-badge">
             <i class="bi bi-activity"></i>
             Hasil Analisis Risiko
@@ -108,18 +142,18 @@
           <small class="text-muted">Gunakan hasil ini sebagai bahan diskusi dengan tenaga kesehatan.</small>
         </div>
 
-        <div class="row align-items-center g-4">
+        <div class="row align-items-center g-5">
           <div class="col-md-5 text-center text-md-start">
             <p class="summary-label mb-1">Kategori Risiko</p>
             <div
               class="result-score {% if level == 'high' %}result-high{% elif level == 'medium' %}result-medium{% else %}result-low{% endif %}">
               {{ risiko }}
             </div>
-            <p class="mt-3" style="color:#4a1c31;">{{ deskripsi }}</p>
+            <p class="mt-2" style="color:#475569; font-size: 1.1rem; line-height: 1.6;">{{ deskripsi }}</p>
           </div>
 
           <div class="col-md-7">
-            <div class="row g-3">
+            <div class="row g-4">
               <div class="col-6 col-md-4">
                 <div class="summary-label">Usia Ibu</div>
                 <div class="summary-value">{{ usia }} tahun</div>
@@ -159,18 +193,19 @@
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-between flex-wrap gap-2 mt-4">
-          <a href="{% url 'input_data' %}" class="btn btn-pink-outline">Ulangi Cek Risiko</a>
-          <a href="#" class="btn btn-pink-solid">Simpan / Cetak (opsional)</a>
+
+        <div class="d-flex justify-content-between flex-wrap gap-3 mt-5 pt-3 border-top border-light">
+          <a href="{% url 'input_data' %}" class="btn btn-blue-outline">Ulangi Cek Risiko</a>
+          <a href="#" class="btn btn-blue-solid" onclick="window.print()">Simpan / Cetak Hasil</a>
         </div>
       </div>
 
       <div class="mt-5">
-        <h4 class="mb-3">Faktor yang Paling Mempengaruhi Hasil Prediksi</h4>
+        <h4 class="mb-3 fw-bold text-slate-800">Faktor yang Paling Mempengaruhi Hasil Prediksi</h4>
 
         <div class="card border-0 shadow-sm"
-          style="border-radius: 18px; background: radial-gradient(circle at top left, rgba(252, 231, 243, 0.9), transparent 55%), radial-gradient(circle at bottom right, rgba(254, 249, 195, 0.9), transparent 55%), #fff; border: 1px solid rgba(251, 113, 133, 0.3);">
-          <div class="card-body">
+          style="border-radius: 20px; background: radial-gradient(circle at top left, rgba(224, 242, 254, 0.5), transparent 60%), #fff; border: 1px solid rgba(186, 230, 253, 0.4);">
+          <div class="card-body p-4">
             <canvas id="shapBarChart" height="320"></canvas>
 
             <!-- Data SHAP disimpan tersembunyi agar JS murni tanpa tag template -->
@@ -183,14 +218,13 @@
         </div>
       </div>
 
-      <div class="mt-4">
-        <h4 class="mb-3">Rekomendasi Penanganan Awal</h4>
-        <div class="card border-0 shadow-sm"
-          style="border-radius: 18px; background: #fff7fb; border: 1px solid rgba(251, 113, 133, 0.25); min-height: 120px;">
-          <div class="card-body">
+      <div class="mt-5">
+        <h4 class="mb-3 fw-bold text-slate-800">Rekomendasi Penanganan Awal</h4>
+        <div class="card border-0 shadow-sm card-recommendation">
+          <div class="card-body p-4">
             {% if risiko == 'NORMAL' %}
-            <h5 class="mb-3" style="color:#1d4ed8; font-weight:600;">Kategori Normal</h5>
-            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+            <h5 class="mb-3" style="color:#0284c7; font-weight:700;">Kategori Normal</h5>
+            <ul style="color:#334155; padding-left:1.2rem; line-height:1.8; font-size:1rem;">
               <li>Pantau kesehatan kehamilan secara rutin sesuai jadwal kunjungan ANC (Antenatal Care) yang dianjurkan
                 tenaga kesehatan</li>
               <li>Konsumsi nutrisi seimbang dengan banyak sayur, buah, protein, kalsium, zat besi, dan mineral</li>
@@ -202,8 +236,8 @@
                 kesehatan terdekat</li>
             </ul>
             {% elif risiko == 'EKLAMSIA' %}
-            <h5 class="mb-3" style="color:#be123c; font-weight:700;">Kategori Eklamsia (Darurat Medis)</h5>
-            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+            <h5 class="mb-3" style="color:#ef4444; font-weight:700;">Kategori Eklamsia (Darurat Medis)</h5>
+            <ul style="color:#334155; padding-left:1.2rem; line-height:1.8; font-size:1rem;">
               <li><strong>Segera bawa ibu hamil ke fasilitas kesehatan rujukan atau IGD terdekat</strong> karena
                 eklamsia merupakan kondisi darurat medis yang dapat mengancam nyawa ibu dan janin. Jangan menunda
                 penanganan.</li>
@@ -225,8 +259,8 @@
                 pascapersalinan untuk mencegah komplikasi berulang.</li>
             </ul>
             {% else %}
-            <h5 class="mb-3" style="color:#1d4ed8; font-weight:600;">Kategori Berisiko Preeklamsia</h5>
-            <ul style="color:#4a1c31; padding-left:1.2rem; line-height:1.8; font-size:0.95rem;">
+            <h5 class="mb-3" style="color:#f59e0b; font-weight:700;">Kategori Berisiko Preeklamsia</h5>
+            <ul style="color:#334155; padding-left:1.2rem; line-height:1.8; font-size:1rem;">
               <li>Segera konsultasi ke tenaga kesehatan terdekat untuk pemeriksaan tekanan darah, protein urin, dan
                 penilaian faktor risiko secara berkala sesuai jadwal yang ditentukan.</li>
               <li>Pantau tanda peringatan seperti sakit kepala berat, penglihatan kabur, nyeri ulu hati atau perut
@@ -266,6 +300,10 @@
       values.push(parseFloat(el.dataset.value));
     });
 
+    // Chart Colors (Blue Theme)
+    const barColor = 'rgba(56, 189, 248, 0.7)'; // Sky 400
+    const borderColor = 'rgba(14, 165, 233, 1)'; // Sky 500
+
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -273,10 +311,11 @@
         datasets: [{
           label: '|SHAP| (semakin besar semakin berpengaruh)',
           data: values,
-          backgroundColor: 'rgba(236, 72, 153, 0.6)',
-          borderColor: 'rgba(236, 72, 153, 1)',
+          backgroundColor: barColor,
+          borderColor: borderColor,
           borderWidth: 1.5,
-          borderRadius: 6,
+          borderRadius: 8,
+          hoverBackgroundColor: 'rgba(56, 189, 248, 0.9)',
         }]
       },
       options: {
@@ -288,9 +327,19 @@
             display: true,
             labels: {
               boxWidth: 12,
+              font: {
+                family: "'Inter', sans-serif",
+                size: 12
+              },
+              color: '#475569'
             }
           },
           tooltip: {
+            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            titleFont: { family: "'Inter', sans-serif", size: 13 },
+            bodyFont: { family: "'Inter', sans-serif", size: 13 },
+            padding: 10,
+            cornerRadius: 8,
             callbacks: {
               label: function (context) {
                 const v = context.raw;
@@ -301,12 +350,28 @@
         },
         scales: {
           x: {
+            grid: {
+              color: '#f1f5f9',
+            },
+            ticks: {
+              color: '#64748b',
+              font: { family: "'Inter', sans-serif" }
+            },
             title: {
               display: true,
               text: 'Nilai rata-rata |SHAP|',
+              color: '#94a3b8',
+              font: { size: 12 }
             }
           },
           y: {
+            grid: {
+              display: false,
+            },
+            ticks: {
+              color: '#475569',
+              font: { family: "'Inter', sans-serif", weight: 500 }
+            },
             title: {
               display: false,
             }

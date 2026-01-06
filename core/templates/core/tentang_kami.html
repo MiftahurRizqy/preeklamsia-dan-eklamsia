@@ -4,7 +4,6 @@
 {% block title %}About Us - Deteksi Risiko Kehamilan{% endblock %}
 
 {% block content %}
-
 <style>
   .section {
     background: rgba(255, 255, 255, 0.9);
@@ -13,18 +12,19 @@
     margin: 4.5rem auto 5rem auto;
     max-width: 1000px;
     backdrop-filter: blur(10px);
-    box-shadow: 0 22px 45px rgba(251, 113, 133, 0.25);
+    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(186, 230, 253, 0.5);
   }
 
   .section h2 {
-    color: #e11d48;
-    font-weight: 600;
+    color: #0284c7;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     text-align: center;
   }
 
   .section p {
-    color: #4a1c31;
+    color: #334155;
     line-height: 1.8;
     font-size: 1.05rem;
     text-align: justify;
@@ -39,9 +39,9 @@
   }
 
   .card-info {
-    background: #fff7fb;
-    border: 1px solid rgba(251, 113, 133, 0.3);
-    border-radius: 15px;
+    background: #f0f9ff;
+    border: 1px solid rgba(186, 230, 253, 0.5);
+    border-radius: 18px;
     width: 280px;
     padding: 2rem 1.5rem;
     text-align: center;
@@ -51,39 +51,43 @@
 
   .card-info:hover {
     transform: translateY(-8px);
-    box-shadow: 0 0 28px rgba(236, 72, 153, 0.45);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25);
+    background: #ffffff;
+    border-color: #7dd3fc;
   }
 
   .card-info h3 {
-    color: #be123c;
+    color: #0369a1;
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    font-weight: 700;
   }
 
   .card-info p {
-    color: #7f1d3a;
+    color: #475569;
     font-size: 0.95rem;
     line-height: 1.6;
   }
 
   .btn-start {
     display: inline-block;
-    background: linear-gradient(120deg, #fb7185, #ec4899, #e879f9);
-    color: #fffdf7;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #ffffff;
     border: none;
     font-weight: 600;
     border-radius: 50px;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 2.5rem;
     margin-top: 1rem;
-    box-shadow: 0 0 24px rgba(236, 72, 153, 0.6);
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
     transition: all 0.3s ease;
     text-decoration: none;
   }
 
   .btn-start:hover {
-    background: linear-gradient(120deg, #f973e0, #fb7185, #f9a8d4);
-    transform: translateY(-1px) scale(1.05);
-    box-shadow: 0 0 34px rgba(236, 72, 153, 0.85);
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.45);
+    color: #ffffff;
   }
 
   @media (max-width: 768px) {
@@ -100,20 +104,22 @@
 </style>
 
 <section class="hero" style="min-height: 60vh;">
+  <!-- Particles handled by base.html -->
   <div class="particle-bg" id="particles"></div>
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
 
   <div class="container" style="margin-top: 6rem; margin-bottom: 3rem;">
-    <div class="row align-items-center g-4">
+    <div class="row align-items-center g-5">
       <div class="col-lg-6" data-aos="fade-up">
-        <h2 style="color:#be123c; font-weight:700;">Tentang Sistem Deteksi Risiko Kehamilan</h2>
-        <p style="color:#4a1c31; margin-top:1rem; line-height:1.8;">
+        <h2 style="color:#0284c7; font-weight:800; font-size: 2.5rem; line-height: 1.2;">Tentang Sistem Deteksi Risiko
+          Kehamilan</h2>
+        <p style="color:#475569; margin-top:1.5rem; line-height:1.8; font-size: 1.1rem;">
           Sistem ini dibangun untuk membantu tenaga kesehatan dan ibu hamil
           dalam melakukan <strong>deteksi dini risiko preeklamsia dan eklamsia</strong> secara cepat
           dan mudah.
         </p>
-        <p style="color:#4a1c31; line-height:1.8;">
+        <p style="color:#475569; line-height:1.8;">
           Dengan memanfaatkan algoritma <strong>Random Forest</strong> dan interpretasi
           <strong>SHAP (SHapley Additive exPlanations)</strong>, sistem tidak hanya
           memberikan hasil prediksi, tetapi juga menjelaskan <em>faktor-faktor apa saja
@@ -124,21 +130,23 @@
           panduan awal pendukung, bukan sebagai pengganti pemeriksaan medis.
         </p>
       </div>
-      <div class="col-lg-5 offset-lg-1" data-aos="zoom-in">
+      <div class="col-lg-5 offset-lg-1" data-aos="zoom-in" data-aos-delay="200">
         <div class="card border-0 shadow-lg"
-          style="border-radius:20px; background:#fff7fb; border:1px solid rgba(251,113,133,0.35);">
+          style="border-radius:24px; background: rgba(255,255,255,0.8); border:1px solid rgba(186, 230, 253, 0.5); backdrop-filter: blur(10px);">
           <div class="card-body p-4">
-            <h5 style="color:#be123c; font-weight:600;" class="mb-3">Tujuan Pengembangan</h5>
-            <ul style="color:#7f1d3a; padding-left:1.2rem; line-height:1.7; font-size:0.95rem;">
-              <li>Mendukung proses pengambilan keputusan klinis secara cepat.</li>
-              <li>Meningkatkan kewaspadaan ibu hamil terhadap faktor risiko.</li>
+            <h5 style="color:#0369a1; font-weight:700;" class="mb-3">Tujuan Pengembangan</h5>
+            <ul style="color:#334155; padding-left:1.2rem; line-height:1.7; font-size:1rem;">
+              <li style="margin-bottom: 8px;">Mendukung proses pengambilan keputusan klinis secara cepat.</li>
+              <li style="margin-bottom: 8px;">Meningkatkan kewaspadaan ibu hamil terhadap faktor risiko.</li>
               <li>Menyajikan hasil prediksi yang transparan dan mudah dipahami.</li>
             </ul>
-            <p class="mt-3 mb-0" style="font-size:0.9rem; color:#7f1d3a;">
-              Aplikasi ini <strong>bukan pengganti pemeriksaan medis</strong>, namun
-              sebagai alat bantu edukasi dan skrining awal yang tetap perlu divalidasi
-              oleh dokter atau bidan.
-            </p>
+            <div class="mt-4 p-3 rounded-3" style="background-color: #f0f9ff; border: 1px dashed #bae6fd;">
+              <p class="mb-0" style="font-size:0.9rem; color:#0369a1;">
+                <strong>Catatan:</strong> Aplikasi ini <strong>bukan pengganti pemeriksaan medis</strong>, namun
+                sebagai alat bantu edukasi dan skrining awal yang tetap perlu divalidasi
+                oleh dokter atau bidan.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -154,20 +162,20 @@
     lokal untuk menjaga kerahasiaan informasi pasien.
   </p>
   <div class="info-cards">
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up">
       <h3>🎓 Latar Belakang</h3>
       <p>Aplikasi ini lahir dari penelitian tugas akhir yang berfokus pada deteksi dini preeklamsia.</p>
     </div>
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up" data-aos-delay="100">
       <h3>🧪 Metodologi</h3>
       <p>Menggunakan dataset klinis terpilih dan model Random Forest yang diuji melalui evaluasi statistik.</p>
     </div>
-    <div class="card-info">
+    <div class="card-info" data-aos="fade-up" data-aos-delay="200">
       <h3>💻 Teknologi</h3>
       <p>Dikembangkan dengan Django, Bootstrap, dan pustaka machine learning Python.</p>
     </div>
   </div>
-  <div style="text-align:center; margin-top:2rem;">
+  <div style="text-align:center; margin-top:3rem;">
     <a href="{% url 'input_data' %}" class="btn-start">Mulai Cek Risiko Sekarang</a>
   </div>
 </section>
